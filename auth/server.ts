@@ -9,6 +9,7 @@ import { env } from "@/env";
 
 const from = process.env.BETTER_AUTH_EMAIL ?? "delivered@resend.dev";
 const to = process.env.TEST_EMAIL ?? "";
+
 export const auth = betterAuth({
   appName: "better-auth-drizzle",
   database: drizzleAdapter(db, { provider: "pg" }),
