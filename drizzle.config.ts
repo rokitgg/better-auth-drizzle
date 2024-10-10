@@ -6,7 +6,7 @@ export default defineConfig({
   out: "./lib/db/migrations",
   dialect: "postgresql",
   dbCredentials: {
-    url: "postgresql://postgres:eMNRWlYLncsyNqB5@localhost:5432/local",
+    url: env.POSTGRES_URL,
   },
   verbose: true,
   strict: true,
