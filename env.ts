@@ -18,9 +18,7 @@ export const env = createEnv({
   server: {
     NODE_ENV: z.enum(["development", "production"]).default("development"),
     // database connection
-    POSTGRES_URL: z
-      .string()
-      .default("postgresql://postgres:eMNRWlYLncsyNqB5@localhost:5432/local"),
+    POSTGRES_URL: z.string(),
     DB_MIGRATING: stringBoolean,
     DB_SEEDING: stringBoolean,
 

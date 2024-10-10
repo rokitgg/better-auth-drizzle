@@ -20,7 +20,7 @@ const globalForDb = globalThis as unknown as {
 
 export const connection =
   globalForDb.connection ??
-  postgres("postgresql://postgres:eMNRWlYLncsyNqB5@localhost:5432/local", {
+  postgres(env.POSTGRES_URL, {
     max: env.DB_MIGRATING || env.DB_SEEDING ? 1 : undefined,
     onnotice: env.DB_SEEDING
       ? () => {
