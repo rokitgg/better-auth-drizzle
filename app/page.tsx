@@ -21,7 +21,7 @@ export default async function Home() {
             Better Auth.
           </h3>
           <p className="text-center break-words text-sm md:text-base">
-            Official demo to showcase{" "}
+            Demo to showcase{" "}
             <a
               href="https://better-auth.com"
               target="_blank"
@@ -29,7 +29,7 @@ export default async function Home() {
             >
               better-auth.
             </a>{" "}
-            features and capabilities. <br />
+            features and capabilities: Drizzle Edition. <br />
           </p>
         </div>
         <div className="md:w-10/12 w-full flex flex-col gap-4">
