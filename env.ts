@@ -17,6 +17,7 @@ const stringBoolean = z.coerce
 export const env = createEnv({
   server: {
     NODE_ENV: z.enum(["development", "production"]).default("development"),
+    VERCEL_ENV: z.enum(["development", "production"]).default("development"),
     // database connection
     POSTGRES_URL: z.string(),
     DB_MIGRATING: stringBoolean,
@@ -34,6 +35,7 @@ export const env = createEnv({
   runtimeEnv: {
     // 'development' | 'production'
     NODE_ENV: process.env.NODE_ENV,
+    VERCEL_ENV: process.env.VERCEL_ENV,
     // drizzle-orm / database
     POSTGRES_URL: process.env.POSTGRES_URL,
     DB_MIGRATING: process.env.DB_MIGRATING,
