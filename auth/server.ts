@@ -77,6 +77,6 @@ export const auth = betterAuth({
     enabled: true,
   },
   logger: {
-    disabled: env.VERCEL_ENV === "production",
+    disabled: false,
   },
 });
