@@ -1,7 +1,8 @@
 import { relations, sql } from "drizzle-orm";
 import { pgTable } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-import { account } from "@/lib/db/schema";
+import { account, session } from "@/lib/db/schema";
+import { id } from "@/lib/db/utils";
 
 /**
  * Defines the schema for the "users" table in the database.
@@ -10,9 +11,10 @@ import { account } from "@/lib/db/schema";
  */
 
 const users = pgTable("user", (t) => ({
-  id: t.uuid().defaultRandom().primaryKey(),
+  id: id(),
   name: t.varchar({ length: 255 }).notNull(),
   email: t.varchar({ length: 255 }).notNull(),
+  emailVerified: t.boolean().default(false),
   image: t.text(),
   createdAt: t.timestamp().defaultNow().notNull(),
   updatedAt: t
@@ -27,6 +29,7 @@ export const userRelations = relations(users, ({ many }) => ({
   // orders: many(order)
   // oauth: many(oauth),
   accounts: many(account),
+  sessions: many(session),
 }));
 
 export type User = typeof users.$inferSelect;

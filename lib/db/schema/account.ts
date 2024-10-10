@@ -1,7 +1,8 @@
-import { relations, sql } from "drizzle-orm";
+import { relations } from "drizzle-orm";
 import { pgTable } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { user } from "@/lib/db/schema";
+import { referencesUserID } from "@/lib/db/utils";
 
 /**
  * Defines the schema for the "accounts" table in the database.
@@ -10,18 +11,13 @@ import { user } from "@/lib/db/schema";
  */
 
 const accounts = pgTable("account", (t) => ({
-  id: t.uuid().defaultRandom().primaryKey(),
-  userId: t
-    .uuid()
-    .notNull()
-    .references(() => user.id, {
-      onDelete: "cascade",
-    }),
+  id: t.text().primaryKey(),
+  userId: referencesUserID(),
   accountId: t.text().notNull(),
   providerId: t.text().notNull(),
   accessToken: t.text(),
   refreshToken: t.text(),
-  expiresAt: t.timestamp().notNull(),
+  expiresAt: t.timestamp(),
   password: t.text(),
 }));
 

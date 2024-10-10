@@ -17,13 +17,20 @@ const stringBoolean = z.coerce
 export const env = createEnv({
   server: {
     NODE_ENV: z.enum(["development", "production"]).default("development"),
+    // database connection
     POSTGRES_URL: z
       .string()
-      .default(
-        "postgresql://postgres:bB5IVa8V1sUCSloM@localhost:5432/local-postgres"
-      ),
+      .default("postgresql://postgres:eMNRWlYLncsyNqB5@localhost:5432/local"),
     DB_MIGRATING: stringBoolean,
     DB_SEEDING: stringBoolean,
+
+    // github oauth
+    GITHUB_CLIENT_ID: z.string(),
+    GITHUB_CLIENT_SECRET: z.string(),
+
+    // better-auth
+    BETTER_AUTH_URL: z.string(),
+    BETTER_AUTH_SECRET: z.string(),
   },
   client: {},
   runtimeEnv: {
@@ -33,6 +40,14 @@ export const env = createEnv({
     POSTGRES_URL: process.env.POSTGRES_URL,
     DB_MIGRATING: process.env.DB_MIGRATING,
     DB_SEEDING: process.env.DB_SEEDING,
+
+    // github oauth
+    GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
+    GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
+
+    // better-auth
+    BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
+    BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
   },
   skipValidation: true,
 });

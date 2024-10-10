@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Button } from "./ui/button";
-import { auth } from "@/lib/auth";
+import { Button } from "../ui/button";
+import { auth } from "@/auth/server";
 import { headers } from "next/headers";
 
 export async function SignInButton() {
@@ -44,7 +44,7 @@ export async function SignInButton() {
 
 function checkOptimisticSession(headers: Headers) {
   const guessIsSignIn =
-    headers.get("cookie")?.includes("better-auth.session") ||
+    headers.get("cookie")?.includes("better-auth.session") ??
     headers.get("cookie")?.includes("__Secure-better-auth.session-token");
   return !!guessIsSignIn;
 }

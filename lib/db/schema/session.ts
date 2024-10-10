@@ -1,7 +1,8 @@
-import { relations, sql } from "drizzle-orm";
+import { relations } from "drizzle-orm";
 import { pgTable } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { user } from "@/lib/db/schema";
+import { id, referencesUserID } from "@/lib/db/utils";
 
 /**
  * Defines the schema for the "sessions" table in the database.
@@ -10,13 +11,8 @@ import { user } from "@/lib/db/schema";
  */
 
 const sessions = pgTable("session", (t) => ({
-  id: t.uuid().defaultRandom().primaryKey(),
-  userId: t
-    .uuid()
-    .notNull()
-    .references(() => user.id, {
-      onDelete: "cascade",
-    }),
+  id: id(),
+  userId: referencesUserID(),
   expiresAt: t.timestamp().notNull(),
   ipAddress: t.text().notNull(),
   userAgent: t.text().notNull(),
