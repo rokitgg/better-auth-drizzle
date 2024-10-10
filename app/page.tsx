@@ -30,7 +30,7 @@ export default async function Home() {
               better-auth.
             </a>{" "}
             features and capabilities:{" "}
-            <span className="text-[#c5f74f]">Drizzle</span> Edition. <br />
+            <span className="text-[#c5f74f]">Drizzle Edition.</span> <br />
           </p>
         </div>
         <div className="md:w-10/12 w-full flex flex-col gap-4">
