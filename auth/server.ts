@@ -12,6 +12,7 @@ const to = process.env.TEST_EMAIL ?? "";
 export const auth = betterAuth({
   appName: "better-auth-drizzle",
   database: drizzleAdapter(db, { provider: "pg" }),
+  baseUrl: env.BETTER_AUTH_URL,
   emailAndPassword: {
     enabled: true,
     async sendResetPassword(url, user) {
