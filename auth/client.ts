@@ -1,6 +1,6 @@
 import { createAuthClient } from "better-auth/react";
 import { passkeyClient, twoFactorClient } from "better-auth/client/plugins";
-import { toast } from "sonner";
+import { toast } from "@/hooks/use-toast";
 
 export const client = createAuthClient({
   plugins: [
@@ -12,7 +12,11 @@ export const client = createAuthClient({
   fetchOptions: {
     onError(e) {
       if (e.error.status === 429) {
-        toast.error("Too many requests. Please try again later.");
+        toast({
+          title: "Error",
+          description: "Too many requests. Please try again later.",
+          variant: "destructive",
+        });
       }
     },
   },

@@ -15,7 +15,7 @@ import { useState } from "react";
 import { signUp } from "@/auth/client";
 import Image from "next/image";
 import { Loader2, X } from "lucide-react";
-import { toast } from "sonner";
+import { toast } from "@/hooks/use-toast";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -145,7 +145,11 @@ export function SignUp() {
           setLoading(true);
         },
         onError: (ctx) => {
-          toast.error(ctx.error.message);
+          toast({
+            title: "Error",
+            description: ctx.error.message,
+            variant: "destructive",
+          });
         },
       },
     });
@@ -296,9 +300,12 @@ export function SignUp() {
                                     "Failed to convert image",
                                     error
                                   );
-                                  toast.error(
-                                    "Failed to process image. Please try again."
-                                  );
+                                  toast({
+                                    title: "Error",
+                                    description:
+                                      "Failed to process image. Please try again.",
+                                    variant: "destructive",
+                                  });
                                 }
                               }
                             }}

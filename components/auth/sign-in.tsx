@@ -16,7 +16,7 @@ import { signIn } from "@/auth/client";
 import { Key, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { toast } from "sonner";
+import { toast } from "@/hooks/use-toast";
 import {
   Form,
   FormControl,
@@ -79,7 +79,11 @@ export default function SignIn() {
           setLoading(false);
         },
         onError: (ctx) => {
-          toast.error(ctx.error.message);
+          toast({
+            title: "Error",
+            description: ctx.error.message,
+            variant: "destructive",
+          });
         },
       }
     );

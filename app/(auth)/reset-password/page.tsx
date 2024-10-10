@@ -15,7 +15,7 @@ import { client } from "@/auth/client";
 import { AlertCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { toast } from "sonner";
+import { toast } from "@/hooks/use-toast";
 
 export default function ResetPassword({
   params,
@@ -38,7 +38,11 @@ export default function ResetPassword({
       newPassword: password,
     });
     if (res.error) {
-      toast.error(res.error.message);
+      toast({
+        title: "Error",
+        description: res.error.message,
+        variant: "destructive",
+      });
     }
     setIsSubmitting(false);
     router.push("/sign-in");

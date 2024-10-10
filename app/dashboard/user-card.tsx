@@ -42,7 +42,7 @@ import {
   Trash,
   X,
 } from "lucide-react";
-import { toast } from "sonner";
+import { toast } from "@/hooks/use-toast";
 import { UAParser } from "ua-parser-js";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -138,11 +138,18 @@ export default function UserCard({
                       setEmailVerificationPending(true);
                     },
                     onError(context) {
-                      toast.error(context.error.message);
+                      toast({
+                        title: "Error",
+                        description: context.error.message,
+                        variant: "destructive",
+                      });
                       setEmailVerificationPending(false);
                     },
                     onSuccess() {
-                      toast.success("Verification email sent successfully");
+                      toast({
+                        title: "Success",
+                        description: "Verification email sent successfully",
+                      });
                       setEmailVerificationPending(false);
                     },
                   }
@@ -185,9 +192,16 @@ export default function UserCard({
                         });
 
                         if (res.error) {
-                          toast.error(res.error.message);
+                          toast({
+                            title: "Error",
+                            description: res.error.message,
+                            variant: "destructive",
+                          });
                         } else {
-                          toast.success("Session terminated successfully");
+                          toast({
+                            title: "Success",
+                            description: "Session terminated successfully",
+                          });
                         }
                         router.refresh();
                         setIsTerminating(undefined);
@@ -291,7 +305,12 @@ export default function UserCard({
                       disabled={isPendingTwoFa}
                       onClick={async () => {
                         if (twoFaPassword.length < 8) {
-                          toast.error("Password must be at least 8 characters");
+                          toast({
+                            title: "Error",
+                            description:
+                              "Password must be at least 8 characters",
+                            variant: "destructive",
+                          });
                           return;
                         }
                         setIsPendingTwoFa(true);
@@ -300,10 +319,17 @@ export default function UserCard({
                             password: twoFaPassword,
                             fetchOptions: {
                               onError(context) {
-                                toast.error(context.error.message);
+                                toast({
+                                  title: "Error",
+                                  description: context.error.message,
+                                  variant: "destructive",
+                                });
                               },
                               onSuccess() {
-                                toast("2FA disabled successfully");
+                                toast({
+                                  title: "Success",
+                                  description: "2FA disabled successfully",
+                                });
                                 setTwoFactorDialog(false);
                               },
                             },
@@ -314,10 +340,17 @@ export default function UserCard({
                             password: twoFaPassword,
                             fetchOptions: {
                               onError(context) {
-                                toast.error(context.error.message);
+                                toast({
+                                  title: "Error",
+                                  description: context.error.message,
+                                  variant: "destructive",
+                                });
                               },
                               onSuccess() {
-                                toast.success("2FA enabled successfully");
+                                toast({
+                                  title: "Success",
+                                  description: "2FA enabled successfully",
+                                });
                                 setTwoFactorDialog(false);
                               },
                             },
@@ -452,11 +485,19 @@ function ChangePassword() {
           <Button
             onClick={async () => {
               if (newPassword !== confirmPassword) {
-                toast.error("Passwords do not match");
+                toast({
+                  title: "Error",
+                  description: "Passwords do not match",
+                  variant: "destructive",
+                });
                 return;
               }
               if (newPassword.length < 8) {
-                toast.error("Password must be at least 8 characters");
+                toast({
+                  title: "Error",
+                  description: "Password must be at least 8 characters",
+                  variant: "destructive",
+                });
                 return;
               }
               setLoading(true);
@@ -467,13 +508,19 @@ function ChangePassword() {
               });
               setLoading(false);
               if (res.error) {
-                toast.error(
-                  res.error.message ??
-                    "Couldn't change your password! Make sure it's correct"
-                );
+                toast({
+                  title: "Error",
+                  description:
+                    res.error.message ??
+                    "Couldn't change your password! Make sure it's correct",
+                  variant: "destructive",
+                });
               } else {
                 setOpen(false);
-                toast.success("Password changed successfully");
+                toast({
+                  title: "Success",
+                  description: "Password changed successfully",
+                });
                 setCurrentPassword("");
                 setNewPassword("");
                 setConfirmPassword("");
@@ -578,10 +625,17 @@ function EditUserDialog(props: { session: Session | null }) {
                 name: name ? name : undefined,
                 fetchOptions: {
                   onSuccess: () => {
-                    toast.success("User updated successfully");
+                    toast({
+                      title: "Success",
+                      description: "User updated successfully",
+                    });
                   },
                   onError: (error) => {
-                    toast.error(error.error.statusText);
+                    toast({
+                      title: "Error",
+                      description: error.error.statusText,
+                      variant: "destructive",
+                    });
                   },
                 },
               });
@@ -613,7 +667,11 @@ function AddPasskey() {
 
   const handleAddPasskey = async () => {
     if (!passkeyName) {
-      toast.error("Passkey name is required");
+      toast({
+        title: "Error",
+        description: "Passkey name is required",
+        variant: "destructive",
+      });
       return;
     }
     setIsLoading(true);
@@ -621,10 +679,17 @@ function AddPasskey() {
       name: passkeyName,
     });
     if (res?.error) {
-      toast.error(res?.error.message);
+      toast({
+        title: "Error",
+        description: res?.error.message,
+        variant: "destructive",
+      });
     } else {
       setIsOpen(false);
-      toast.success("Passkey added successfully. You can now use it to login.");
+      toast({
+        title: "Success",
+        description: "Passkey added successfully. You can now use it to login.",
+      });
     }
     setIsLoading(false);
   };
@@ -681,7 +746,11 @@ function ListPasskeys() {
 
   const handleAddPasskey = async () => {
     if (!passkeyName) {
-      toast.error("Passkey name is required");
+      toast({
+        title: "Error",
+        description: "Passkey name is required",
+        variant: "destructive",
+      });
       return;
     }
     setIsLoading(true);
@@ -690,9 +759,16 @@ function ListPasskeys() {
     });
     setIsLoading(false);
     if (res?.error) {
-      toast.error(res?.error.message);
+      toast({
+        title: "Error",
+        description: res?.error.message,
+        variant: "destructive",
+      });
     } else {
-      toast.success("Passkey added successfully. You can now use it to login.");
+      toast({
+        title: "Success",
+        description: "Passkey added successfully. You can now use it to login.",
+      });
     }
   };
   const [isLoading, setIsLoading] = useState(false);
@@ -734,11 +810,18 @@ function ListPasskeys() {
                               setIsDeletePasskey(true);
                             },
                             onSuccess: () => {
-                              toast("Passkey deleted successfully");
+                              toast({
+                                title: "Success",
+                                description: "Passkey deleted successfully",
+                              });
                               setIsDeletePasskey(false);
                             },
                             onError: (error) => {
-                              toast.error(error.error.message);
+                              toast({
+                                title: "Error",
+                                description: error.error.message,
+                                variant: "destructive",
+                              });
                               setIsDeletePasskey(false);
                             },
                           },
