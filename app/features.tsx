@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Logo } from "@/components/logo";
 
 export function Features() {
+  // TODO: Add features
   return (
     <>
       <div className="flex flex-col lg:flex-row bg-white dark:bg-black w-full gap-4 mx-auto px-8">
