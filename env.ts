@@ -17,12 +17,6 @@ const stringBoolean = z.coerce
 export const env = createEnv({
   server: {
     NODE_ENV: z.enum(["development", "production"]).default("development"),
-    // database connection
-    POSTGRES_URL: z
-      .string()
-      .default("postgresql://postgres:eMNRWlYLncsyNqB5@localhost:5432/local"),
-    DB_MIGRATING: stringBoolean,
-    DB_SEEDING: stringBoolean,
 
     // github oauth
     GITHUB_CLIENT_ID: z.string(),
@@ -31,15 +25,14 @@ export const env = createEnv({
     // better-auth
     BETTER_AUTH_URL: z.string(),
     BETTER_AUTH_SECRET: z.string(),
+
+    // sqlite
+    DB_FILE_NAME: z.string(),
   },
   client: {},
   runtimeEnv: {
     // 'development' | 'production'
     NODE_ENV: process.env.NODE_ENV,
-    // drizzle-orm / database
-    POSTGRES_URL: process.env.POSTGRES_URL,
-    DB_MIGRATING: process.env.DB_MIGRATING,
-    DB_SEEDING: process.env.DB_SEEDING,
 
     // github oauth
     GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
@@ -48,6 +41,8 @@ export const env = createEnv({
     // better-auth
     BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
     BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
+
+    // sqlite
+    DB_FILE_NAME: process.env.DB_FILE_NAME,
   },
-  skipValidation: true,
 });

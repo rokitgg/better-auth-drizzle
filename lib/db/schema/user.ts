@@ -1,8 +1,7 @@
-import { relations, sql } from "drizzle-orm";
-import { pgTable } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { account, session } from "@/lib/db/schema";
-import { id } from "@/lib/db/utils";
+import { sqliteTable } from "drizzle-orm/sqlite-core";
 
 /**
  * Defines the schema for the "users" table in the database.
@@ -10,18 +9,14 @@ import { id } from "@/lib/db/utils";
  * @description A user represents an entity who can sign in to the application.
  */
 
-const users = pgTable("user", (t) => ({
-  id: id(),
-  name: t.varchar({ length: 255 }).notNull(),
-  email: t.varchar({ length: 255 }).notNull(),
-  emailVerified: t.boolean().default(false),
+const users = sqliteTable("user", (t) => ({
+  id: t.text().primaryKey(),
+  name: t.text().notNull(),
+  email: t.text().notNull(),
+  emailVerified: t.integer(),
   image: t.text(),
-  createdAt: t.timestamp().defaultNow().notNull(),
-  updatedAt: t
-    .timestamp()
-    .defaultNow()
-    .notNull()
-    .$onUpdate(() => sql`now()`),
+  createdAt: t.text().notNull(),
+  updatedAt: t.text().notNull(),
 }));
 
 export const userRelations = relations(users, ({ many }) => ({

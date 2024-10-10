@@ -1,8 +1,7 @@
 import { relations } from "drizzle-orm";
-import { pgTable } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { user } from "@/lib/db/schema";
-import { id, referencesUserID } from "@/lib/db/utils";
+import { sqliteTable } from "drizzle-orm/sqlite-core";
 
 /**
  * Defines the schema for the "sessions" table in the database.
@@ -10,12 +9,12 @@ import { id, referencesUserID } from "@/lib/db/utils";
  * @description A session represents a user's login session.
  */
 
-const sessions = pgTable("session", (t) => ({
-  id: id(),
-  userId: referencesUserID(),
-  expiresAt: t.timestamp().notNull(),
-  ipAddress: t.text().notNull(),
-  userAgent: t.text().notNull(),
+const sessions = sqliteTable("session", (t) => ({
+  id: t.text().primaryKey(),
+  userId: t.text().notNull(),
+  expiresAt: t.text().notNull(),
+  ipAddress: t.text(),
+  userAgent: t.text(),
 }));
 
 export const sessionRelations = relations(sessions, ({ one }) => ({

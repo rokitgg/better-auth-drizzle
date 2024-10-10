@@ -1,8 +1,7 @@
 import { relations } from "drizzle-orm";
-import { pgTable } from "drizzle-orm/pg-core";
+import { sqliteTable } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { user } from "@/lib/db/schema";
-import { referencesUserID } from "@/lib/db/utils";
 
 /**
  * Defines the schema for the "accounts" table in the database.
@@ -10,14 +9,14 @@ import { referencesUserID } from "@/lib/db/utils";
  * @description [...]
  */
 
-const accounts = pgTable("account", (t) => ({
+const accounts = sqliteTable("account", (t) => ({
   id: t.text().primaryKey(),
-  userId: referencesUserID(),
+  userId: t.text().notNull(),
   accountId: t.text().notNull(),
   providerId: t.text().notNull(),
   accessToken: t.text(),
   refreshToken: t.text(),
-  expiresAt: t.timestamp(),
+  expiresAt: t.text(),
   password: t.text(),
 }));
 

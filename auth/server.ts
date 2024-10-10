@@ -6,12 +6,20 @@ import { resend } from "@/lib/email/resend";
 import db from "@/lib/db";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { env } from "@/env";
+import { user, session, account } from "@/lib/db/schema";
 
 const from = process.env.BETTER_AUTH_EMAIL ?? "delivered@resend.dev";
 const to = process.env.TEST_EMAIL ?? "";
 export const auth = betterAuth({
   appName: "better-auth-drizzle",
-  database: drizzleAdapter(db, { provider: "pg" }),
+  database: drizzleAdapter(db, {
+    provider: "sqlite",
+    schema: {
+      user: user,
+      session: session,
+      account: account,
+    },
+  }),
   emailAndPassword: {
     enabled: true,
     async sendResetPassword(url, user) {
