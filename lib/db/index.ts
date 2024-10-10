@@ -33,7 +33,7 @@ if (env.NODE_ENV !== "production") globalForDb.connection = connection;
 
 export const db = drizzle(connection, {
   schema,
-  logger: true,
+  logger: env.NODE_ENV !== "production",
   casing: "camelCase",
 });
 
